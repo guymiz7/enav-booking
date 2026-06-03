@@ -91,7 +91,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, delay: 1.15, ease: EASE }}
-          className="mt-5 flex w-fit max-w-full items-center gap-2.5 rounded-full border border-white/35 bg-navy px-5 py-2.5 shadow-[0_8px_24px_-10px_rgba(0,0,0,0.6)] sm:gap-3 sm:px-6 sm:py-3"
+          className="mt-5 flex w-fit max-w-full items-center gap-2.5 rounded-full bg-white px-5 py-2.5 shadow-[0_10px_28px_-12px_rgba(0,0,0,0.55)] sm:gap-3 sm:px-6 sm:py-3"
         >
           <svg
             width="13"
@@ -99,7 +99,7 @@ export function Hero() {
             viewBox="0 0 14 14"
             fill="none"
             aria-hidden
-            className="shrink-0 text-white/85"
+            className="shrink-0 text-navy/75"
           >
             <path
               d="M9 3 L5 7 L9 11 M12 3 L8 7 L12 11"
@@ -109,7 +109,7 @@ export function Hero() {
               strokeLinejoin="round"
             />
           </svg>
-          <span className="text-[14px] font-medium leading-tight text-white sm:text-[15px]">
+          <span className="text-[14px] font-medium leading-tight text-navy sm:text-[15px]">
             החל מ-<span className="tabular">3.98</span> מיליון ש&quot;ח · 5–6
             חדרים מרווחות
           </span>
