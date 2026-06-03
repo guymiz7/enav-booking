@@ -19,16 +19,16 @@ export function Hero() {
         style={{ objectPosition: "center center" }}
       />
 
-      {/* Very subtle base wash — keeps overall page bonded to navy palette
-          but lets the הדמייה show clearly. Washes concentrated only where
-          text actually sits. */}
-      <div className="pointer-events-none absolute inset-0 bg-navy/15" />
+      {/* Base wash — light enough that the image still reads through
+          the middle band, dark enough that text everywhere stays legible. */}
+      <div className="pointer-events-none absolute inset-0 bg-navy/35" />
 
       {/* gradient wash behind logo + headline (top) */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-[34%] bg-gradient-to-b from-navy via-navy/55 to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-[38%] bg-gradient-to-b from-navy via-navy/75 to-transparent" />
 
-      {/* gradient wash behind marketing copy + CTA (bottom) */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[55%] bg-gradient-to-t from-navy via-navy/75 to-transparent" />
+      {/* gradient wash behind marketing copy + CTA (bottom). Higher
+          opacity because that band carries the densest text. */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[60%] bg-gradient-to-t from-navy via-navy/90 to-transparent" />
 
       {/* ============== Content — single vertical hierarchy ============== */}
       <div
