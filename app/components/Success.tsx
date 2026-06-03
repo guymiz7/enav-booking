@@ -69,7 +69,7 @@ export function Success({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.45 }}
-          className="mt-12 text-center text-[11.5px] font-light uppercase tracking-[0.34em] text-white/65"
+          className="mt-12 text-right text-[11.5px] font-light tracking-[0.34em] text-white/65"
         >
           התור שלך נקבע
         </motion.p>
@@ -78,7 +78,7 @@ export function Success({
           initial={{ opacity: 0, y: 6 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-4 text-center font-display text-[clamp(2.1rem,8vw,2.7rem)] font-extralight leading-tight tracking-[-0.018em]"
+          className="mt-4 text-right font-display text-[clamp(2.1rem,8vw,2.7rem)] font-extralight leading-tight tracking-[-0.018em]"
         >
           {first ? `${first}, ` : ""}תודה.
         </motion.h2>
@@ -87,7 +87,7 @@ export function Success({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.7, delay: 0.85 }}
-          className="mx-auto mt-5 max-w-[36ch] text-center text-[15px] font-light leading-[1.65] text-white/85 text-balance"
+          className="mt-5 max-w-[36ch] text-right text-[15px] font-light leading-[1.65] text-white/85"
         >
           נציג מכירות מטעם <span className="text-white">ENAV</span> ייצור איתך
           קשר טלפוני קצר לאישור התור.
@@ -98,7 +98,7 @@ export function Success({
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 1.05 }}
-          className="mx-auto mt-10 w-full max-w-[360px] space-y-5"
+          className="mt-10 w-full space-y-5"
         >
           <SummaryRow label="הפרויקט" value={PROJECT_LABEL} />
           <SummaryRow label="תאריך" value={formatDate(date)} />
@@ -112,7 +112,7 @@ export function Success({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 1.3 }}
-            className="mx-auto mt-10 text-[14px] font-light text-white/85 underline decoration-white/40 underline-offset-[6px] transition hover:text-white hover:decoration-white"
+            className="mt-10 self-start text-[14px] font-light text-white/85 underline decoration-white/40 underline-offset-[6px] transition hover:text-white hover:decoration-white"
           >
             לקביעת תור נוסף
           </motion.button>
@@ -122,15 +122,15 @@ export function Success({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.7, delay: 1.45 }}
-          className="mx-auto mt-10 flex items-center justify-center gap-2 border-t border-white/12 pt-6 text-[14.5px] font-light text-white/70"
+          className="mt-10 flex items-center justify-end gap-2 border-t border-white/12 pt-6 text-right text-[14.5px] font-light text-white/70"
         >
-          <span>לפרטים נוספים חייגו</span>
           <a
             href="tel:*3989"
             className="font-display text-[16px] font-medium tracking-[0.04em] tabular text-white hover:text-white/85"
           >
             *3989
           </a>
+          <span>לפרטים נוספים חייגו</span>
         </motion.p>
       </div>
     </motion.div>
@@ -147,15 +147,15 @@ function SummaryRow({
   tabular?: boolean;
 }) {
   return (
-    <div className="flex items-baseline justify-between gap-4 border-b border-white/10 pb-3">
-      <span className="text-[11px] font-light uppercase tracking-[0.32em] text-white/45">
+    <div className="border-b border-white/10 pb-3 text-right">
+      <div className="text-[11px] font-light tracking-[0.32em] text-white/45">
         {label}
-      </span>
-      <span
-        className={`text-[15.5px] font-light text-white ${tabular ? "tabular" : ""}`}
+      </div>
+      <div
+        className={`mt-1 text-[16px] font-light text-white ${tabular ? "tabular" : ""}`}
       >
         {value}
-      </span>
+      </div>
     </div>
   );
 }

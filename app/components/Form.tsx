@@ -98,7 +98,7 @@ export function Form({ onSubmit }: { onSubmit: (d: LeadData) => void }) {
           {/* ============== Appointment scheduling ============== */}
           <div className="mt-9 mb-3 flex items-center gap-3">
             <span className="text-[11px] font-medium uppercase tracking-[0.32em] text-white/65">
-              קביעת תור לסיור
+              בחרו את המועד המתאים לכם
             </span>
             <span className="h-px flex-1 bg-white/20" />
           </div>

@@ -61,25 +61,23 @@
     background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14' fill='%23102B4B'><path d='M11.5 3.5L5.5 9.5 2.5 6.5l1-1L5.5 7.5l5-5z'/></svg>") center/10px no-repeat;
   }
 
+  /* The parent stays a scroll container but no longer snaps —
+     scroll-snap on a section that's taller than the viewport caused
+     the form to keep jumping back to its start when scrolled. */
   .snap-scroll {
     height: 100svh;
     overflow-y: scroll;
     overflow-x: hidden;
-    scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
     overscroll-behavior-y: none;
   }
   .snap-section {
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
     height: 100svh;
     width: 100%;
     overflow: hidden;
     position: relative;
   }
   .snap-section-grow {
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
     min-height: 100svh;
     width: 100%;
     position: relative;
