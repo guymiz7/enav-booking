@@ -60,27 +60,54 @@ export function Hero() {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.4, delay: 1.2, ease: [0.22, 1, 0.36, 1] }}
-          className="mx-auto max-w-[560px] text-center text-[22px] font-light leading-[1.5] text-white text-balance"
+          className="mx-auto max-w-[560px] text-center text-[22px] font-light leading-[1.55] text-white text-balance"
           style={{ textShadow: "0 1px 14px rgba(16,43,75,0.7)" }}
         >
-          נכנסים בקיץ הקרוב לבית החדש שלכם בכפר סבא ומשלמים בעוד שנה וחצי!
+          נכנסים{" "}
+          <span className="font-medium underline decoration-white/85 decoration-[1.5px] underline-offset-[6px]">
+            בקיץ הקרוב
+          </span>{" "}
+          לבית החדש שלכם בכפר סבא ומשלמים בעוד{" "}
+          <span className="font-medium underline decoration-white/85 decoration-[1.5px] underline-offset-[6px]">
+            שנה וחצי
+          </span>
+          !
         </motion.p>
 
-        <motion.p
+        {/* Pricing pill — bordered capsule with chevron */}
+        <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.4, delay: 1.4, ease: [0.22, 1, 0.36, 1] }}
-          className="mx-auto mt-5 max-w-[560px] text-center text-[16px] font-light leading-[1.5] text-white/95 text-balance"
-          style={{ textShadow: "0 1px 14px rgba(16,43,75,0.7)" }}
+          className="mx-auto mt-6 flex w-fit max-w-full items-center gap-3 rounded-full border border-white/55 bg-white/[0.06] px-6 py-3 backdrop-blur-sm"
         >
-          החל מ-3.98 מיליון ש&quot;ח לדירות 5–6 חדרים מרווחות
-        </motion.p>
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 14 14"
+            fill="none"
+            aria-hidden
+            className="shrink-0 text-white/85"
+          >
+            <path
+              d="M9 3 L5 7 L9 11 M12 3 L8 7 L12 11"
+              stroke="currentColor"
+              strokeWidth="1.4"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+          <span className="text-[15px] font-medium leading-tight text-white sm:text-[16px]">
+            החל מ-<span className="tabular">3.98</span> מיליון ש&quot;ח לדירות
+            5–6 חדרים מרווחות
+          </span>
+        </motion.div>
 
         <motion.p
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.4, delay: 1.55, ease: [0.22, 1, 0.36, 1] }}
-          className="mx-auto mt-4 max-w-[560px] text-center text-[14px] font-light leading-[1.5] text-white/85 text-balance"
+          className="mx-auto mt-5 max-w-[560px] text-center text-[15px] font-light leading-[1.5] text-white/90 text-balance"
           style={{ textShadow: "0 1px 14px rgba(16,43,75,0.7)" }}
         >
           ליווי בנקאי צמוד במסלולי מימון מותאמים אישית
@@ -90,7 +117,7 @@ export function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 1.75 }}
-          className="mx-auto mt-3 text-center text-[10px] font-light tracking-wider text-white/60"
+          className="mx-auto mt-3 text-center text-[10px] font-light tracking-wider text-white/55"
         >
           *בכפוף לתקנון · ט.ל.ח
         </motion.p>
