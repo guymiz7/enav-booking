@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 
@@ -10,7 +10,6 @@ const HEBREW_DAYS = ["א'", "ב'", "ג'", "ד'", "ה'", "ו'", "ש'"] as const;
 
 type DateOption = {
   iso: string;
-  dayName: string;
   pretty: string; // e.g. "א' 7.06"
   isToday: boolean;
   isTomorrow: boolean;
@@ -29,7 +28,6 @@ const generateUpcomingDays = (count: number): DateOption[] => {
     const dd = String(d.getDate()).padStart(2, "0");
     out.push({
       iso: `${yyyy}-${mm}-${dd}`,
-      dayName: HEBREW_DAYS[d.getDay()],
       pretty: `${HEBREW_DAYS[d.getDay()]} ${d.getDate()}.${mm}`,
       isToday: i === 0,
       isTomorrow: i === 1,
@@ -51,37 +49,15 @@ const ALL_SLOTS = [
   "19:00",
 ];
 
-// Pseudo-availability: deterministic per date so the UI feels real.
-type Availability = "high" | "medium" | "low" | "taken";
-
-const availabilityFor = (iso: string, slotIdx: number): Availability => {
-  if (!iso) return "high";
+// Deterministic per-date "taken" slots so the UI feels real.
+const takenSlotsFor = (iso: string): Set<string> => {
+  if (!iso) return new Set();
   const seed = iso.split("-").reduce((a, b) => a + parseInt(b, 10), 0);
-  const m = (seed + slotIdx * 3) % 5;
-  if (m === 0) return "taken";
-  if (m === 1) return "low";
-  if (m === 2) return "medium";
-  return "high";
-};
-
-const dayAvailability = (iso: string): Exclude<Availability, "taken"> => {
-  const seed = iso.split("-").reduce((a, b) => a + parseInt(b, 10), 0);
-  const m = seed % 6;
-  if (m === 0) return "low";
-  if (m === 1 || m === 2) return "medium";
-  return "high";
-};
-
-const AVAILABILITY_LABEL: Record<Exclude<Availability, "taken">, string> = {
-  high: "זמינות גבוהה",
-  medium: "זמינות בינונית",
-  low: "מקומות אחרונים",
-};
-
-const AVAILABILITY_DOT: Record<Exclude<Availability, "taken">, string> = {
-  high: "bg-emerald-400",
-  medium: "bg-amber-400",
-  low: "bg-red-400",
+  const out = new Set<string>();
+  ALL_SLOTS.forEach((s, idx) => {
+    if ((seed + idx * 3) % 5 === 0) out.add(s);
+  });
+  return out;
 };
 
 export function SlotPicker({
@@ -100,189 +76,88 @@ export function SlotPicker({
   timeError?: string;
 }) {
   const days = useMemo(() => generateUpcomingDays(14), []);
-  const selectedDay = days.find((d) => d.iso === date);
-  const [mode, setMode] = useState<"date" | "time">(date ? "time" : "date");
-
-  if (!date && mode === "time") setMode("date");
+  const taken = useMemo(() => takenSlotsFor(date), [date]);
 
   return (
-    <div className="!mt-4">
-      {/* ============ Card — uses page palette (navy/white) ============ */}
-      <div className="rounded-2xl border border-white/12 bg-white/[0.035] p-5 backdrop-blur-sm">
-        {/* Card header */}
-        <div className="flex items-center justify-between gap-3 pb-3">
-          <button
-            type="button"
-            aria-label={mode === "time" ? "חזרה לבחירת תאריך" : "פתוח"}
-            onClick={() => mode === "time" && setMode("date")}
-            className={cn(
-              "flex h-7 w-7 items-center justify-center rounded-full text-white/55 transition",
-              mode === "time" && "hover:bg-white/[0.06] hover:text-white"
-            )}
-          >
-            <svg
-              width="12"
-              height="12"
-              viewBox="0 0 12 12"
-              fill="none"
-              aria-hidden
-              className={mode === "time" ? "rotate-90" : ""}
-            >
-              <path
-                d="M2 4 L6 8 L10 4"
-                stroke="currentColor"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </button>
-          <h3 className="font-display text-[16px] font-light tracking-wide text-white">
-            תאריך ושעה
-          </h3>
-        </div>
-        <div className="h-px w-full bg-white/12" />
-
-        {/* Subheader */}
-        <div className="mt-4 mb-4 text-center">
-          <h4 className="font-display text-[14px] font-light text-white/85">
-            {mode === "date"
-              ? "בחרו תאריך"
-              : `בחרו שעה · ${selectedDay?.pretty ?? ""}`}
-          </h4>
+    <div>
+      {/* ============ Date ============ */}
+      <div className="!mt-3">
+        <div className="mb-2 flex items-baseline justify-between text-[12.5px] font-light">
+          <span className="text-white/70">
+            תאריך<span className="ms-0.5">*</span>
+          </span>
+          {dateError && <span className="text-white/65">{dateError}</span>}
         </div>
 
-        {/* ===== Date grid ===== */}
-        <AnimatePresence mode="wait">
-          {mode === "date" && (
-            <motion.div
-              key="dates"
-              initial={{ opacity: 0, y: 6 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -4 }}
-              transition={{ duration: 0.25, ease: EASE }}
-              className="grid grid-cols-2 gap-2.5"
-            >
-              {days.map((d, i) => {
-                const active = d.iso === date;
-                const avail = dayAvailability(d.iso);
-                const isLastOdd = i === days.length - 1 && days.length % 2 === 1;
-                return (
-                  <button
-                    key={d.iso}
-                    type="button"
-                    onClick={() => {
-                      onDateChange(d.iso);
-                      setMode("time");
-                    }}
-                    className={cn(
-                      "flex flex-col items-center gap-0.5 rounded-full border px-3 py-2 text-center transition-all duration-200",
-                      isLastOdd && "col-span-2 mx-auto w-[calc(50%-5px)]",
-                      active
-                        ? "border-white bg-white text-navy"
-                        : "border-white/22 bg-transparent text-white hover:border-white/55 hover:bg-white/[0.04]"
-                    )}
-                  >
-                    <span
-                      className={cn(
-                        "font-display text-[14px] font-light leading-tight tabular",
-                        active ? "text-navy" : "text-white"
-                      )}
-                    >
-                      {d.isToday ? "היום" : d.isTomorrow ? "מחר" : d.pretty}
-                    </span>
-                    <span
-                      className={cn(
-                        "flex items-center gap-1.5 text-[10.5px] font-light leading-tight",
-                        active ? "text-navy/65" : "text-white/55"
-                      )}
-                    >
-                      {AVAILABILITY_LABEL[avail]}
-                      <span
-                        className={cn(
-                          "inline-block h-1.5 w-1.5 rounded-full",
-                          AVAILABILITY_DOT[avail]
-                        )}
-                      />
-                    </span>
-                  </button>
-                );
-              })}
-            </motion.div>
-          )}
+        <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3">
+          {days.map((d) => {
+            const active = d.iso === date;
+            return (
+              <button
+                key={d.iso}
+                type="button"
+                onClick={() => onDateChange(d.iso)}
+                className={cn(
+                  "flex h-12 items-center justify-center rounded-full border text-center font-display text-[15px] font-medium tabular tracking-wide transition-all duration-200",
+                  active
+                    ? "border-white bg-white text-navy shadow-[0_4px_18px_-6px_rgba(255,255,255,0.4)]"
+                    : "border-white/40 bg-white/[0.03] text-white hover:border-white hover:bg-white/[0.07]"
+                )}
+              >
+                {d.isToday ? "היום" : d.isTomorrow ? "מחר" : d.pretty}
+              </button>
+            );
+          })}
+        </div>
+      </div>
 
-          {/* ===== Time grid ===== */}
-          {mode === "time" && date && (
-            <motion.div
-              key="times"
-              initial={{ opacity: 0, y: 6 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -4 }}
-              transition={{ duration: 0.25, ease: EASE }}
-              className="grid grid-cols-3 gap-2"
-            >
-              {ALL_SLOTS.map((slot, idx) => {
-                const avail = availabilityFor(date, idx);
-                const isTaken = avail === "taken";
+      {/* ============ Time ============ */}
+      <div className="!mt-7">
+        <div className="mb-2 flex items-baseline justify-between text-[12.5px] font-light">
+          <span className="text-white/70">
+            שעה<span className="ms-0.5">*</span>
+          </span>
+          {timeError && <span className="text-white/65">{timeError}</span>}
+        </div>
+
+        {!date ? (
+          <p className="rounded-full border border-white/20 bg-white/[0.02] px-4 py-3.5 text-center text-[13px] font-light text-white/45">
+            בחרו תאריך כדי לראות שעות פנויות
+          </p>
+        ) : (
+          <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
+            <AnimatePresence mode="popLayout">
+              {ALL_SLOTS.map((slot) => {
+                const isTaken = taken.has(slot);
                 const isSelected = slot === time;
                 return (
-                  <button
-                    key={slot}
+                  <motion.button
+                    key={`${date}-${slot}`}
                     type="button"
                     disabled={isTaken}
+                    initial={{ opacity: 0, scale: 0.97 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.25, ease: EASE }}
                     onClick={() => onTimeChange(slot)}
                     className={cn(
-                      "relative flex h-11 items-center justify-center rounded-full border text-[14px] font-light tabular transition-all duration-200",
+                      "flex h-12 items-center justify-center rounded-full border text-[15px] font-medium tabular tracking-wider transition-all duration-200",
                       isTaken &&
-                        "cursor-not-allowed border-white/[0.08] bg-transparent text-white/25 line-through",
+                        "cursor-not-allowed border-white/[0.1] bg-transparent text-white/25 line-through",
                       !isTaken &&
                         !isSelected &&
-                        "border-white/22 bg-transparent text-white hover:border-white/55 hover:bg-white/[0.04]",
-                      isSelected && "border-white bg-white text-navy"
+                        "border-white/40 bg-white/[0.03] text-white hover:border-white hover:bg-white/[0.07]",
+                      isSelected &&
+                        "border-white bg-white text-navy shadow-[0_4px_18px_-6px_rgba(255,255,255,0.4)]"
                     )}
                   >
                     {slot}
-                    {!isTaken && !isSelected && (
-                      <span
-                        className={cn(
-                          "absolute -bottom-0.5 left-1/2 inline-block h-1 w-1 -translate-x-1/2 rounded-full",
-                          AVAILABILITY_DOT[avail as Exclude<Availability, "taken">]
-                        )}
-                      />
-                    )}
-                  </button>
+                  </motion.button>
                 );
               })}
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* back to date hint */}
-        {mode === "time" && (
-          <button
-            type="button"
-            onClick={() => setMode("date")}
-            className="mx-auto mt-5 flex items-center gap-1 text-[12px] font-light text-white/55 underline underline-offset-2 transition hover:text-white"
-          >
-            <svg width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden>
-              <path
-                d="M4 2 L8 6 L4 10"
-                stroke="currentColor"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            חזרה לבחירת תאריך
-          </button>
+            </AnimatePresence>
+          </div>
         )}
       </div>
-
-      {(dateError || timeError) && (
-        <div className="mt-2 text-right text-[12px] font-light text-white/65">
-          {dateError ?? timeError}
-        </div>
-      )}
     </div>
   );
 }

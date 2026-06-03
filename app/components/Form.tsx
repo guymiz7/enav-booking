@@ -151,11 +151,11 @@ export function Form({ onSubmit }: { onSubmit: (d: LeadData) => void }) {
           </Field>
 
           {/* ============== Appointment scheduling ============== */}
-          <div className="mt-10 mb-2 flex items-center gap-3">
-            <span className="text-[11px] font-medium uppercase tracking-[0.32em] text-white/50">
+          <div className="mt-9 mb-3 flex items-center gap-3">
+            <span className="text-[11px] font-medium uppercase tracking-[0.32em] text-white/65">
               קביעת תור לסיור
             </span>
-            <span className="h-px flex-1 bg-white/10" />
+            <span className="h-px flex-1 bg-white/20" />
           </div>
 
           <SlotPicker
@@ -244,7 +244,7 @@ function Field({
   return (
     <div className="!mt-3 first:!mt-0">
       <div className="mb-1.5 flex items-baseline justify-between text-[12.5px] font-light">
-        <span className="text-white/55">
+        <span className="text-white/70">
           {label}
           {required && <span className="ms-0.5">*</span>}
           {optional && <span className="ms-1 text-white/30">(רשות)</span>}

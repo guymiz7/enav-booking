@@ -25,17 +25,17 @@
     width: 100%;
     background: transparent;
     border: 0;
-    border-bottom: 1px solid rgba(255,255,255,0.22);
+    border-bottom: 1.5px solid rgba(255,255,255,0.42);
     color: #fff;
     font-family: inherit;
     font-size: 17.5px;
-    font-weight: 300;
+    font-weight: 400;
     padding: 13px 0;
     outline: none;
-    transition: border-color 0.3s ease;
+    transition: border-color 0.25s ease;
   }
   .input-line:focus { border-bottom-color: #fff; }
-  .input-line::placeholder { color: rgba(255,255,255,0.28); }
+  .input-line::placeholder { color: rgba(255,255,255,0.45); }
 
   .check-box {
     appearance: none;
