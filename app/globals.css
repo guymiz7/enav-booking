@@ -37,20 +37,6 @@
   .input-line:focus { border-bottom-color: #fff; }
   .input-line::placeholder { color: rgba(255,255,255,0.28); }
 
-  /* Native date / time inputs need a few extra knobs so they match input-line */
-  .input-line[type="date"],
-  .input-line[type="time"] {
-    color-scheme: dark;
-    appearance: none;
-    -webkit-appearance: none;
-  }
-  .input-line[type="date"]::-webkit-calendar-picker-indicator,
-  .input-line[type="time"]::-webkit-calendar-picker-indicator {
-    filter: invert(1) brightness(0.85);
-    opacity: 0.55;
-    cursor: pointer;
-  }
-
   .check-box {
     appearance: none;
     -webkit-appearance: none;

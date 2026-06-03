@@ -1,9 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { LegalSheet } from "./LegalSheet";
+import { SlotPicker } from "./SlotPicker";
 
 export type LeadData = {
   name: string;
@@ -35,19 +36,10 @@ export function Form({ onSubmit }: { onSubmit: (d: LeadData) => void }) {
   const [submitting, setSubmitting] = useState(false);
   const [legalOpen, setLegalOpen] = useState<"terms" | "privacy" | null>(null);
 
-  // earliest selectable date — today (local)
-  const minDate = useMemo(() => {
-    const d = new Date();
-    const yyyy = d.getFullYear();
-    const mm = String(d.getMonth() + 1).padStart(2, "0");
-    const dd = String(d.getDate()).padStart(2, "0");
-    return `${yyyy}-${mm}-${dd}`;
-  }, []);
-
   const nameOk = data.name.trim().length >= 2;
   const phoneOk = data.phone.replace(/\D/g, "").length >= 9;
   const projectOk = data.project.length > 0;
-  const dateOk = data.date.length > 0 && data.date >= minDate;
+  const dateOk = data.date.length > 0;
   const timeOk = /^\d{2}:\d{2}$/.test(data.time);
 
   const formValid =
@@ -159,56 +151,27 @@ export function Form({ onSubmit }: { onSubmit: (d: LeadData) => void }) {
           </Field>
 
           {/* ============== Appointment scheduling ============== */}
-          <div className="mt-8 mb-1 flex items-center gap-3">
+          <div className="mt-10 mb-2 flex items-center gap-3">
             <span className="text-[11px] font-medium uppercase tracking-[0.32em] text-white/50">
               קביעת תור לסיור
             </span>
             <span className="h-px flex-1 bg-white/10" />
           </div>
 
-          <Field
-            label="תאריך"
-            required
-            error={
-              touched.date && !dateOk
-                ? data.date
-                  ? "לא תקין"
-                  : "חובה"
-                : undefined
-            }
-          >
-            <input
-              type="date"
-              value={data.date}
-              min={minDate}
-              onChange={(e) => setData({ ...data, date: e.target.value })}
-              onBlur={() => setTouched((t) => ({ ...t, date: true }))}
-              className="input-line text-right tabular"
-              dir="ltr"
-            />
-          </Field>
-
-          <Field
-            label="שעה"
-            required
-            error={
-              touched.time && !timeOk
-                ? data.time
-                  ? "לא תקין"
-                  : "חובה"
-                : undefined
-            }
-          >
-            <input
-              type="time"
-              value={data.time}
-              step={1800}
-              onChange={(e) => setData({ ...data, time: e.target.value })}
-              onBlur={() => setTouched((t) => ({ ...t, time: true }))}
-              className="input-line text-right tabular"
-              dir="ltr"
-            />
-          </Field>
+          <SlotPicker
+            date={data.date}
+            time={data.time}
+            onDateChange={(iso) => {
+              setData({ ...data, date: iso, time: "" });
+              setTouched((t) => ({ ...t, date: true }));
+            }}
+            onTimeChange={(hhmm) => {
+              setData({ ...data, time: hhmm });
+              setTouched((t) => ({ ...t, time: true }));
+            }}
+            dateError={touched.date && !dateOk ? "בחרו תאריך" : undefined}
+            timeError={touched.time && !timeOk ? "בחרו שעה" : undefined}
+          />
 
           <label className="mt-8 flex items-start gap-3 text-right text-[12.5px] font-light leading-[1.65] text-white/75">
             <input
