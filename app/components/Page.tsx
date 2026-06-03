@@ -8,14 +8,13 @@ import { Success } from "./Success";
 
 export function Page() {
   const [success, setSuccess] = useState<{
-    name: string;
     date: string;
     time: string;
   } | null>(null);
   const [formKey, setFormKey] = useState(0);
 
   const onSubmit = (d: LeadData) => {
-    setSuccess({ name: d.name, date: d.date, time: d.time });
+    setSuccess({ date: d.date, time: d.time });
   };
 
   const onRestart = () => {
@@ -38,7 +37,6 @@ export function Page() {
       </main>
       {success && (
         <Success
-          name={success.name}
           date={success.date}
           time={success.time}
           onRestart={onRestart}

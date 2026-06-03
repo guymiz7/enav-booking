@@ -28,18 +28,14 @@ const formatDate = (iso: string) => {
 };
 
 export function Success({
-  name,
   date,
   time,
   onRestart,
 }: {
-  name: string;
   date: string;
   time: string;
   onRestart?: () => void;
 }) {
-  const first = name.trim().split(/\s+/)[0] || "";
-
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -80,7 +76,7 @@ export function Success({
           transition={{ duration: 0.9, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="mt-4 text-center font-display text-[clamp(2.1rem,8vw,2.7rem)] font-extralight leading-tight tracking-[-0.018em]"
         >
-          {first ? `${first}, ` : ""}תודה.
+          תודה.
         </motion.h2>
 
         <motion.p
