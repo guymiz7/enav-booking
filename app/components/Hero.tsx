@@ -31,8 +31,9 @@ export function Hero() {
         }}
       />
 
-      {/* ENAV logo + tagline — vertically centered */}
-      <div className="absolute inset-0 z-10 flex flex-col items-center justify-center px-6">
+      {/* ENAV logo + tagline — vertically centered. Pointer-events disabled
+          so the bottom CTA below it remains clickable across the full width. */}
+      <div className="pointer-events-none absolute inset-0 z-10 flex flex-col items-center justify-center px-6">
         <motion.img
           src={asset("/media/logo.png")}
           alt="ENAV"
@@ -54,7 +55,7 @@ export function Hero() {
       </div>
 
       {/* bottom headline */}
-      <div className="absolute inset-x-0 bottom-0 px-6 pb-6 sm:pb-10">
+      <div className="absolute inset-x-0 bottom-0 z-20 px-6 pb-6 sm:pb-10">
         <motion.p
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
