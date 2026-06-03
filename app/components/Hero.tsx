@@ -94,42 +94,25 @@ export function Hero() {
           *בכפוף לתקנון · ט.ל.ח
         </motion.p>
 
-        {/* scroll-down indicator */}
+        {/* CTA — scrolls to the form */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1.9 }}
+          initial={{ opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 1.9, ease: [0.22, 1, 0.36, 1] }}
           className="mt-7 flex justify-center"
         >
-          <motion.div
-            animate={{ y: [0, 5, 0], opacity: [0.5, 0.95, 0.5] }}
-            transition={{
-              duration: 1.8,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-            className="flex flex-col items-center gap-1"
+          <motion.button
+            type="button"
+            whileTap={{ scale: 0.985 }}
+            onClick={() =>
+              document
+                .getElementById("form")
+                ?.scrollIntoView({ behavior: "smooth", block: "start" })
+            }
+            className="rounded-full border border-white bg-white px-8 py-3.5 text-[15px] font-medium tracking-wide text-navy shadow-[0_8px_24px_-10px_rgba(255,255,255,0.45)] transition hover:bg-white/95"
           >
-            <span className="text-[10px] font-light uppercase tracking-[0.32em] text-white/70">
-              גלילה
-            </span>
-            <svg
-              width="20"
-              height="12"
-              viewBox="0 0 20 12"
-              fill="none"
-              aria-hidden
-            >
-              <path
-                d="M2 2 L10 9 L18 2"
-                stroke="white"
-                strokeOpacity="0.85"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </motion.div>
+            לקביעת פגישת ייעוץ
+          </motion.button>
         </motion.div>
       </div>
     </section>
