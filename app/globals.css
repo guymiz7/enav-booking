@@ -7,6 +7,7 @@
   body {
     height: 100%;
     background: #102B4B;
+    overflow: hidden;
     overscroll-behavior: none;
   }
   body {
@@ -16,6 +17,87 @@
     color: #fff;
   }
   ::selection { background: #fff; color: #102B4B; }
+  ::-webkit-scrollbar { width: 0; height: 0; }
+}
+
+@layer components {
+  .input-line {
+    width: 100%;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid rgba(255,255,255,0.22);
+    color: #fff;
+    font-family: inherit;
+    font-size: 17.5px;
+    font-weight: 300;
+    padding: 13px 0;
+    outline: none;
+    transition: border-color 0.3s ease;
+  }
+  .input-line:focus { border-bottom-color: #fff; }
+  .input-line::placeholder { color: rgba(255,255,255,0.28); }
+
+  /* Native date / time inputs need a few extra knobs so they match input-line */
+  .input-line[type="date"],
+  .input-line[type="time"] {
+    color-scheme: dark;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  .input-line[type="date"]::-webkit-calendar-picker-indicator,
+  .input-line[type="time"]::-webkit-calendar-picker-indicator {
+    filter: invert(1) brightness(0.85);
+    opacity: 0.55;
+    cursor: pointer;
+  }
+
+  .check-box {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    border: 1px solid rgba(255,255,255,0.4);
+    background: transparent;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-top: 3px;
+    position: relative;
+    transition: all 0.2s;
+  }
+  .check-box:checked {
+    background: #fff;
+    border-color: #fff;
+  }
+  .check-box:checked::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14' fill='%23102B4B'><path d='M11.5 3.5L5.5 9.5 2.5 6.5l1-1L5.5 7.5l5-5z'/></svg>") center/10px no-repeat;
+  }
+
+  .snap-scroll {
+    height: 100svh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+    overscroll-behavior-y: none;
+  }
+  .snap-section {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    height: 100svh;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+  }
+  .snap-section-grow {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    min-height: 100svh;
+    width: 100%;
+    position: relative;
+  }
 }
 
 @layer utilities {

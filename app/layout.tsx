@@ -24,9 +24,8 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "ענב 360 — כפר סבא | קודם כל בית",
-  description:
-    'נכנסים בקיץ הקרוב לבית החדש שלכם בכפר סבא, ומשלמים בעוד שנה וחצי. דירות 5–6 חדרים החל מ-3.98 מיליון ש"ח.',
+  title: "ENAV — קביעת תור לסיור",
+  description: "קביעת תור לסיור אישי בפרויקטים של ENAV",
 };
 
 export default function RootLayout({
