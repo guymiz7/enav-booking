@@ -53,11 +53,7 @@ export function Form({ onSubmit }: { onSubmit: (d: LeadData) => void }) {
             מתי מתאים לך שנפגש?
           </motion.h2>
 
-          <div className="mt-3 text-center text-[13px] font-light text-white/65">
-            בחרו מועד ונציג מטעמנו יחזור אליכם לאישור
-          </div>
-
-          <div className="mt-6">
+          <div className="mt-8">
             <SlotPicker
               date={data.date}
               time={data.time}
