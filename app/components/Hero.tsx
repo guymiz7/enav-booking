@@ -49,7 +49,7 @@ export function Hero() {
           className="mt-5 text-center text-[17px] font-light tracking-[0.24em] text-white"
           style={{ textShadow: "0 1px 12px rgba(16,43,75,0.55)" }}
         >
-          יוצרים מציאות חדשה
+          קודם כל בית.
         </motion.p>
       </div>
 
@@ -62,7 +62,36 @@ export function Hero() {
           className="mx-auto max-w-[560px] text-center text-[22px] font-light leading-[1.5] text-white text-balance"
           style={{ textShadow: "0 1px 14px rgba(16,43,75,0.7)" }}
         >
-          מלאו פרטים וקבעו תור לסיור אישי בפרויקט שמעניין אתכם
+          נכנסים בקיץ הקרוב לבית החדש שלכם בכפר סבא ומשלמים בעוד שנה וחצי!
+        </motion.p>
+
+        <motion.p
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.4, delay: 1.4, ease: [0.22, 1, 0.36, 1] }}
+          className="mx-auto mt-5 max-w-[560px] text-center text-[16px] font-light leading-[1.5] text-white/95 text-balance"
+          style={{ textShadow: "0 1px 14px rgba(16,43,75,0.7)" }}
+        >
+          החל מ-3.98 מיליון ש&quot;ח לדירות 5–6 חדרים מרווחות
+        </motion.p>
+
+        <motion.p
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.4, delay: 1.55, ease: [0.22, 1, 0.36, 1] }}
+          className="mx-auto mt-4 max-w-[560px] text-center text-[14px] font-light leading-[1.5] text-white/85 text-balance"
+          style={{ textShadow: "0 1px 14px rgba(16,43,75,0.7)" }}
+        >
+          ליווי בנקאי צמוד במסלולי מימון מותאמים אישית
+        </motion.p>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 1.75 }}
+          className="mx-auto mt-3 text-center text-[10px] font-light tracking-wider text-white/60"
+        >
+          *בכפוף לתקנון · ט.ל.ח
         </motion.p>
 
         {/* scroll-down indicator */}
