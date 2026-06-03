@@ -2,7 +2,8 @@
 
 import { motion } from "framer-motion";
 import { asset } from "@/lib/asset";
-import { PROJECT_OPTIONS } from "./Form";
+
+const PROJECT_LABEL = "ENAV 360 · כפר סבא";
 
 const HEBREW_DAYS = ["ראשון", "שני", "שלישי", "רביעי", "חמישי", "שישי", "שבת"];
 const HEBREW_MONTHS = [
@@ -28,20 +29,16 @@ const formatDate = (iso: string) => {
 
 export function Success({
   name,
-  project,
   date,
   time,
   onRestart,
 }: {
   name: string;
-  project: string;
   date: string;
   time: string;
   onRestart?: () => void;
 }) {
   const first = name.trim().split(/\s+/)[0] || "";
-  const projectLabel =
-    PROJECT_OPTIONS.find((p) => p.value === project)?.label || "—";
 
   return (
     <motion.div
@@ -103,7 +100,7 @@ export function Success({
           transition={{ duration: 0.7, delay: 1.05 }}
           className="mx-auto mt-10 w-full max-w-[360px] space-y-5"
         >
-          <SummaryRow label="הפרויקט" value={projectLabel} />
+          <SummaryRow label="הפרויקט" value={PROJECT_LABEL} />
           <SummaryRow label="תאריך" value={formatDate(date)} />
           <SummaryRow label="שעה" value={time} tabular />
         </motion.div>

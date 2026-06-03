@@ -9,20 +9,13 @@ import { Success } from "./Success";
 export function Page() {
   const [success, setSuccess] = useState<{
     name: string;
-    project: string;
     date: string;
     time: string;
   } | null>(null);
-  // Bumped on restart so the Form remounts with fresh internal state.
   const [formKey, setFormKey] = useState(0);
 
   const onSubmit = (d: LeadData) => {
-    setSuccess({
-      name: d.name,
-      project: d.project,
-      date: d.date,
-      time: d.time,
-    });
+    setSuccess({ name: d.name, date: d.date, time: d.time });
   };
 
   const onRestart = () => {
@@ -46,7 +39,6 @@ export function Page() {
       {success && (
         <Success
           name={success.name}
-          project={success.project}
           date={success.date}
           time={success.time}
           onRestart={onRestart}

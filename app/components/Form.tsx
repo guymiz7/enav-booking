@@ -9,25 +9,15 @@ import { SlotPicker } from "./SlotPicker";
 export type LeadData = {
   name: string;
   phone: string;
-  project: string;
   date: string; // YYYY-MM-DD
   time: string; // HH:MM
   consent: boolean;
 };
 
-export const PROJECT_OPTIONS: { value: string; label: string }[] = [
-  { value: "village-kiryat-ono", label: "VILLAGE · קריית אונו" },
-  { value: "new-ramat-gan", label: "NEW · רמת גן" },
-  { value: "shderot-yehud", label: "שדרות האומנות · יהוד-מונסון" },
-  { value: "enav-360-kfar-saba", label: "ENAV 360 · כפר סבא" },
-  { value: "ein-hayam", label: "COMING SOON · עין הים" },
-];
-
 export function Form({ onSubmit }: { onSubmit: (d: LeadData) => void }) {
   const [data, setData] = useState<LeadData>({
     name: "",
     phone: "",
-    project: "",
     date: "",
     time: "",
     consent: true,
@@ -38,19 +28,16 @@ export function Form({ onSubmit }: { onSubmit: (d: LeadData) => void }) {
 
   const nameOk = data.name.trim().length >= 2;
   const phoneOk = data.phone.replace(/\D/g, "").length >= 9;
-  const projectOk = data.project.length > 0;
   const dateOk = data.date.length > 0;
   const timeOk = /^\d{2}:\d{2}$/.test(data.time);
 
-  const formValid =
-    nameOk && phoneOk && projectOk && dateOk && timeOk && data.consent;
+  const formValid = nameOk && phoneOk && dateOk && timeOk && data.consent;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setTouched({
       name: true,
       phone: true,
-      project: true,
       date: true,
       time: true,
       consent: true,
@@ -108,48 +95,6 @@ export function Form({ onSubmit }: { onSubmit: (d: LeadData) => void }) {
             />
           </Field>
 
-          <Field
-            label="הפרויקט שמעניין אותי"
-            required
-            error={touched.project && !projectOk ? "חובה" : undefined}
-          >
-            <div className="relative">
-              <select
-                value={data.project}
-                onChange={(e) => setData({ ...data, project: e.target.value })}
-                onBlur={() => setTouched((t) => ({ ...t, project: true }))}
-                className={cn(
-                  "input-line w-full appearance-none bg-transparent text-right",
-                  !data.project && "text-white/35"
-                )}
-                dir="rtl"
-              >
-                <option value="" disabled>
-                  בחרו פרויקט
-                </option>
-                {PROJECT_OPTIONS.map((opt) => (
-                  <option key={opt.value} value={opt.value} className="text-navy">
-                    {opt.label}
-                  </option>
-                ))}
-              </select>
-              <span
-                aria-hidden
-                className="pointer-events-none absolute inset-y-0 left-0 flex items-center text-white/55"
-              >
-                <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
-                  <path
-                    d="M1 1.5 L6 6.5 L11 1.5"
-                    stroke="currentColor"
-                    strokeWidth="1.4"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </span>
-            </div>
-          </Field>
-
           {/* ============== Appointment scheduling ============== */}
           <div className="mt-9 mb-3 flex items-center gap-3">
             <span className="text-[11px] font-medium uppercase tracking-[0.32em] text-white/65">
@@ -173,7 +118,7 @@ export function Form({ onSubmit }: { onSubmit: (d: LeadData) => void }) {
             timeError={touched.time && !timeOk ? "בחרו שעה" : undefined}
           />
 
-          <label className="mt-8 flex items-start gap-3 text-right text-[12.5px] font-light leading-[1.65] text-white/75">
+          <label className="mt-10 flex items-start gap-3 text-right text-[12.5px] font-light leading-[1.65] text-white/75">
             <input
               type="checkbox"
               checked={data.consent}
@@ -212,7 +157,7 @@ export function Form({ onSubmit }: { onSubmit: (d: LeadData) => void }) {
             disabled={submitting}
             whileTap={{ scale: 0.985 }}
             className={cn(
-              "mt-auto w-full border py-[18px] text-[17px] font-medium tracking-wide transition",
+              "mt-10 w-full border py-[18px] text-[17px] font-medium tracking-wide transition",
               formValid && !submitting
                 ? "border-white bg-white text-navy"
                 : "border-white/15 bg-transparent text-white/45"
