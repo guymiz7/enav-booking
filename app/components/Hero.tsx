@@ -91,7 +91,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, delay: 1.15, ease: EASE }}
-          className="mt-5 flex w-fit max-w-full items-center gap-2.5 rounded-full border border-white/55 bg-white/[0.06] px-5 py-2.5 backdrop-blur-sm sm:gap-3 sm:px-6 sm:py-3"
+          className="mt-5 flex w-fit max-w-full items-center gap-2.5 rounded-full border border-white/35 bg-navy px-5 py-2.5 shadow-[0_8px_24px_-10px_rgba(0,0,0,0.6)] sm:gap-3 sm:px-6 sm:py-3"
         >
           <svg
             width="13"
