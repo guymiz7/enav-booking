@@ -64,7 +64,6 @@ const availabilityFor = (iso: string, slotIdx: number): Availability => {
   return "high";
 };
 
-// For each date, derive a single high/medium/low label for the card label.
 const dayAvailability = (iso: string): Exclude<Availability, "taken"> => {
   const seed = iso.split("-").reduce((a, b) => a + parseInt(b, 10), 0);
   const m = seed % 6;
@@ -80,9 +79,9 @@ const AVAILABILITY_LABEL: Record<Exclude<Availability, "taken">, string> = {
 };
 
 const AVAILABILITY_DOT: Record<Exclude<Availability, "taken">, string> = {
-  high: "bg-emerald-500",
-  medium: "bg-amber-500",
-  low: "bg-red-500",
+  high: "bg-emerald-400",
+  medium: "bg-amber-400",
+  low: "bg-red-400",
 };
 
 export function SlotPicker({
@@ -104,13 +103,12 @@ export function SlotPicker({
   const selectedDay = days.find((d) => d.iso === date);
   const [mode, setMode] = useState<"date" | "time">(date ? "time" : "date");
 
-  // keep mode in sync if parent resets date externally
   if (!date && mode === "time") setMode("date");
 
   return (
     <div className="!mt-4">
-      {/* ============ Kitzis-style card ============ */}
-      <div className="rounded-2xl bg-[#EDE4CE] p-5 text-navy shadow-[0_18px_42px_-22px_rgba(0,0,0,0.4)]">
+      {/* ============ Card — uses page palette (navy/white) ============ */}
+      <div className="rounded-2xl border border-white/12 bg-white/[0.035] p-5 backdrop-blur-sm">
         {/* Card header */}
         <div className="flex items-center justify-between gap-3 pb-3">
           <button
@@ -118,8 +116,8 @@ export function SlotPicker({
             aria-label={mode === "time" ? "חזרה לבחירת תאריך" : "פתוח"}
             onClick={() => mode === "time" && setMode("date")}
             className={cn(
-              "flex h-7 w-7 items-center justify-center rounded-full text-navy/60 transition",
-              mode === "time" && "hover:bg-navy/[0.05] hover:text-navy"
+              "flex h-7 w-7 items-center justify-center rounded-full text-white/55 transition",
+              mode === "time" && "hover:bg-white/[0.06] hover:text-white"
             )}
           >
             <svg
@@ -139,15 +137,15 @@ export function SlotPicker({
               />
             </svg>
           </button>
-          <h3 className="font-display text-[16px] font-medium tracking-wide text-navy">
+          <h3 className="font-display text-[16px] font-light tracking-wide text-white">
             תאריך ושעה
           </h3>
         </div>
-        <div className="h-px w-full bg-navy/15" />
+        <div className="h-px w-full bg-white/12" />
 
         {/* Subheader */}
-        <div className="mt-4 mb-4 flex items-baseline justify-between">
-          <h4 className="mx-auto font-display text-[15px] font-medium text-navy">
+        <div className="mt-4 mb-4 text-center">
+          <h4 className="font-display text-[14px] font-light text-white/85">
             {mode === "date"
               ? "בחרו תאריך"
               : `בחרו שעה · ${selectedDay?.pretty ?? ""}`}
@@ -168,7 +166,6 @@ export function SlotPicker({
               {days.map((d, i) => {
                 const active = d.iso === date;
                 const avail = dayAvailability(d.iso);
-                // For odd last item, span both columns and center
                 const isLastOdd = i === days.length - 1 && days.length % 2 === 1;
                 return (
                   <button
@@ -179,17 +176,17 @@ export function SlotPicker({
                       setMode("time");
                     }}
                     className={cn(
-                      "group flex flex-col items-center gap-0.5 rounded-full border px-3 py-2 text-center transition-all duration-200",
+                      "flex flex-col items-center gap-0.5 rounded-full border px-3 py-2 text-center transition-all duration-200",
                       isLastOdd && "col-span-2 mx-auto w-[calc(50%-5px)]",
                       active
-                        ? "border-navy bg-navy text-[#EDE4CE]"
-                        : "border-navy/25 bg-transparent text-navy hover:border-navy/55 hover:bg-navy/[0.04]"
+                        ? "border-white bg-white text-navy"
+                        : "border-white/22 bg-transparent text-white hover:border-white/55 hover:bg-white/[0.04]"
                     )}
                   >
                     <span
                       className={cn(
-                        "font-display text-[14px] font-medium leading-tight tabular",
-                        active ? "text-[#EDE4CE]" : "text-navy"
+                        "font-display text-[14px] font-light leading-tight tabular",
+                        active ? "text-navy" : "text-white"
                       )}
                     >
                       {d.isToday ? "היום" : d.isTomorrow ? "מחר" : d.pretty}
@@ -197,7 +194,7 @@ export function SlotPicker({
                     <span
                       className={cn(
                         "flex items-center gap-1.5 text-[10.5px] font-light leading-tight",
-                        active ? "text-[#EDE4CE]/75" : "text-navy/65"
+                        active ? "text-navy/65" : "text-white/55"
                       )}
                     >
                       {AVAILABILITY_LABEL[avail]}
@@ -235,13 +232,13 @@ export function SlotPicker({
                     disabled={isTaken}
                     onClick={() => onTimeChange(slot)}
                     className={cn(
-                      "relative flex h-11 items-center justify-center rounded-full border text-[14px] font-medium tabular transition-all duration-200",
+                      "relative flex h-11 items-center justify-center rounded-full border text-[14px] font-light tabular transition-all duration-200",
                       isTaken &&
-                        "cursor-not-allowed border-navy/10 bg-transparent text-navy/25 line-through",
+                        "cursor-not-allowed border-white/[0.08] bg-transparent text-white/25 line-through",
                       !isTaken &&
                         !isSelected &&
-                        "border-navy/25 bg-transparent text-navy hover:border-navy/55 hover:bg-navy/[0.04]",
-                      isSelected && "border-navy bg-navy text-[#EDE4CE]"
+                        "border-white/22 bg-transparent text-white hover:border-white/55 hover:bg-white/[0.04]",
+                      isSelected && "border-white bg-white text-navy"
                     )}
                   >
                     {slot}
@@ -260,12 +257,12 @@ export function SlotPicker({
           )}
         </AnimatePresence>
 
-        {/* "back to date" hint when in time mode */}
+        {/* back to date hint */}
         {mode === "time" && (
           <button
             type="button"
             onClick={() => setMode("date")}
-            className="mx-auto mt-5 flex items-center gap-1 text-[12px] font-light text-navy/65 underline underline-offset-2 transition hover:text-navy"
+            className="mx-auto mt-5 flex items-center gap-1 text-[12px] font-light text-white/55 underline underline-offset-2 transition hover:text-white"
           >
             <svg width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden>
               <path
@@ -281,7 +278,6 @@ export function SlotPicker({
         )}
       </div>
 
-      {/* Errors shown below card to keep the card clean */}
       {(dateError || timeError) && (
         <div className="mt-2 text-right text-[12px] font-light text-white/65">
           {dateError ?? timeError}
