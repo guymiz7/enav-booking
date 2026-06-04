@@ -17,7 +17,7 @@ export function Form() {
           מתי מתאים לך שנפגש?
         </motion.h2>
 
-        <div className="mt-8 overflow-hidden rounded-2xl border border-white/12 bg-white/[0.02]">
+        <div className="mt-8 overflow-hidden rounded-2xl">
           <CalEmbed />
         </div>
       </div>

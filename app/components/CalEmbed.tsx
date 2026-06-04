@@ -10,8 +10,6 @@ export function CalEmbed() {
       cal("ui", {
         hideEventTypeDetails: false,
         layout: "month_view",
-        // Match the page palette so the embed feels native.
-        styles: { branding: { brandColor: "#102B4B" } },
         theme: "dark",
       });
     })();
@@ -28,6 +26,7 @@ export function CalEmbed() {
       }}
       config={{
         layout: "month_view",
+        theme: "dark",
         useSlotsViewOnSmallScreen: "true",
       }}
     />
