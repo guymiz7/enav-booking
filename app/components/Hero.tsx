@@ -93,23 +93,7 @@ export function Hero({ onBook }: { onBook: () => void }) {
           transition={{ duration: 1.2, delay: 1.15, ease: EASE }}
           className="mt-5 flex w-fit items-center gap-2 rounded-full bg-white px-4 py-2.5 shadow-[0_10px_28px_-12px_rgba(0,0,0,0.55)] sm:gap-3 sm:px-6 sm:py-3"
         >
-          <svg
-            width="12"
-            height="12"
-            viewBox="0 0 14 14"
-            fill="none"
-            aria-hidden
-            className="shrink-0 text-navy/75"
-          >
-            <path
-              d="M9 3 L5 7 L9 11 M12 3 L8 7 L12 11"
-              stroke="currentColor"
-              strokeWidth="1.4"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-          <span className="whitespace-nowrap text-[12.5px] font-medium leading-tight text-navy sm:text-[15px]">
+<span className="whitespace-nowrap text-[12.5px] font-medium leading-tight text-navy sm:text-[15px]">
             החל מ-<span className="tabular">3.98</span> מיליון ש&quot;ח · לדירות 5–6 חדרים
           </span>
         </motion.div>
