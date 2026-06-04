@@ -6,7 +6,7 @@ import Cal, { getCalApi } from "@calcom/embed-react";
 export function CalEmbed() {
   useEffect(() => {
     (async () => {
-      const cal = await getCalApi({ namespace: "15min" });
+      const cal = await getCalApi({ namespace: "60min" });
       cal("ui", {
         hideEventTypeDetails: false,
         layout: "month_view",
@@ -19,8 +19,8 @@ export function CalEmbed() {
 
   return (
     <Cal
-      namespace="15min"
-      calLink="efratl-enav/15min"
+      namespace="60min"
+      calLink="efratl-enav/60min"
       style={{
         width: "100%",
         minHeight: "640px",
