@@ -110,8 +110,7 @@ export function Hero({ onBook }: { onBook: () => void }) {
             />
           </svg>
           <span className="text-[14px] font-medium leading-tight text-navy sm:text-[15px]">
-            החל מ-<span className="tabular">3.98</span> מיליון ש&quot;ח · 5–6
-            חדרים מרווחות
+            החל מ-<span className="tabular">3.98</span> מיליון ש&quot;ח · 5–6 חדרים
           </span>
         </motion.div>
 
