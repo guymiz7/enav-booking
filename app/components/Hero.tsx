@@ -94,7 +94,7 @@ export function Hero({ onBook }: { onBook: () => void }) {
           className="mt-5 flex w-fit items-center gap-2 rounded-full bg-white px-4 py-2.5 shadow-[0_10px_28px_-12px_rgba(0,0,0,0.55)] sm:gap-3 sm:px-6 sm:py-3"
         >
 <span className="whitespace-nowrap text-[12.5px] font-medium leading-tight text-navy sm:text-[15px]">
-            החל מ-<span className="tabular">3.98</span> מיליון ש&quot;ח · לדירות 5–6 חדרים
+            החל מ-<span className="tabular">3.98</span> מיליון ש&quot;ח לדירות 5–6 חדרים
           </span>
         </motion.div>
 
