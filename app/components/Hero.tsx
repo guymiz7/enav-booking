@@ -5,7 +5,7 @@ import { asset } from "@/lib/asset";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
-export function Hero() {
+export function Hero({ onBook }: { onBook: () => void }) {
   return (
     <section
       id="hero"
@@ -143,11 +143,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 6 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 1.65, ease: EASE }}
-          onClick={() =>
-            document
-              .getElementById("form")
-              ?.scrollIntoView({ behavior: "smooth", block: "start" })
-          }
+          onClick={onBook}
           className="mt-8 rounded-full border border-white bg-white px-8 py-3.5 text-[15px] font-medium tracking-wide text-navy shadow-[0_10px_28px_-12px_rgba(255,255,255,0.5)] transition hover:bg-white/95 sm:mt-10 sm:px-10 sm:py-4 sm:text-[16px]"
         >
           לקביעת פגישת ייעוץ
